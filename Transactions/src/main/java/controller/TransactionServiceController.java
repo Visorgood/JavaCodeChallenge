@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -33,5 +34,17 @@ public class TransactionServiceController {
             @PathVariable("id") Long id) {
         System.out.println("Returning transaction with id: " + id);
         return transactions.get(id);
+    }
+
+    @RequestMapping(value = "/types/{type}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Long> getTransactionsByType(@PathVariable("type") String type) {
+
+    }
+
+    @RequestMapping(value = "/sum/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Double getSumOfTransactionsAmountsByParentId(@PathVariable("id") Long parentId) {
+
     }
 }
