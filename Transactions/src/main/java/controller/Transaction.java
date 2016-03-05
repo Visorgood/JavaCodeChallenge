@@ -2,17 +2,20 @@ package controller;
 
 public class Transaction {
 
-    private final double amount;
-    private final String type;
-    private final long parentId;
+    private Double amount;
+    private String type;
+    private Long parentId;
 
-    public Transaction(double amount, String type, long parentId) {
+    public Transaction() {
+    }
+
+    public Transaction(Double amount, String type, Long parentId) {
         this.amount = amount;
         this.type = type;
         this.parentId = parentId;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
@@ -20,7 +23,19 @@ public class Transaction {
         return type;
     }
 
-    public long getParentId() {
+    public Long getParentId() {
         return parentId;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 }
