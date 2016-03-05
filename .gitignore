@@ -41,3 +41,4 @@ crashlytics-build.properties
 fabric.properties
 Transactions/.idea/workspace.xml
 *.class
+.idea/*
