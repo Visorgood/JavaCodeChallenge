@@ -1,13 +1,18 @@
 package service;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Transaction {
 
-    private final Double amount;
-    private final String type;
-    private final Long parentId;
+    @JsonProperty("amount")
+    private Double amount;
+    @JsonProperty("type")
+    private String type;
+    @JsonProperty("parent_id")
+    private Long parentId;
 
-//    public Transaction() {
-//    }
+    public Transaction() {
+    }
 
     public Transaction(Double amount, String type, Long parentId) {
         this.amount = amount;
@@ -26,16 +31,16 @@ public class Transaction {
     public Long getParentId() {
         return parentId;
     }
-//
-//    public void setAmount(Double amount) {
-//        this.amount = amount;
-//    }
-//
-//    public void setType(String type) {
-//        this.type = type;
-//    }
-//
-//    public void setParentId(Long parentId) {
-//        this.parentId = parentId;
-//    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
 }

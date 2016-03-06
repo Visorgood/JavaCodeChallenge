@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +29,6 @@ public class TransactionServiceController {
     }
 
     @RequestMapping(value = "/transaction/{id}", method = RequestMethod.GET)
-    @ResponseBody
     public Transaction getTransaction(
             @PathVariable("id") Long id) {
         System.out.println("Returning transaction with id: " + id);
@@ -38,14 +36,12 @@ public class TransactionServiceController {
     }
 
     @RequestMapping(value = "/types/{type}", method = RequestMethod.GET)
-    @ResponseBody
     public Set<Long> getIdsByType(@PathVariable("type") String type) {
         System.out.println("Returning list of transaction ids for type: " + type);
         return transactionService.getIdsByType(type);
     }
 
     @RequestMapping(value = "/sum/{id}", method = RequestMethod.GET)
-    @ResponseBody
     public Double getSumAmountByParentIds(@PathVariable("id") Long id) {
         System.out.println("Returning sum amount transitively for id: " + id);
         return transactionService.getSumAmountByParentIds(id);
