@@ -10,6 +10,6 @@ Class TransactionService contains logic of the service, and is able to answer re
 Method addTransaction works in asynchronous fashion, which is done by Spring using @Async annotation. It is a synchronized method, which is needed to avoid collisions in case of simultaneous requests. This is not the best solution, because it uses locking. Queue of requests could be used to avoid it. But as far as this method is always called in a different thread, it doesn't block service from serving other requests.
 Other methods, that answer different queries, are neither asynchronous nor synchronized, which is in theory dangerous, and could be improved, but in the current case they return value from only one concurrent map (among three) at a time. In my understanding it shouldn't lead to any race condition.
 
-TransactionServiceTest class tests behaviour of methods of TransactionService calls.
+TransactionServiceTest class tests behaviour of methods of TransactionService.
 
 TransactionServiceControllerIT class tests integrated behaviour of the service.
