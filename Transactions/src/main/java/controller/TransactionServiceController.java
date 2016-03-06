@@ -9,17 +9,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.Set;
+
+import service.Transaction;
+import service.TransactionService;
 
 @RestController
 @RequestMapping("/transactionservice")
 public class TransactionServiceController {
 
-    private final ConcurrentMap<Long, Transaction> transactions = new ConcurrentHashMap<>();
-    private final ConcurrentMap<String, List<Long>> typeToIds = new ConcurrentHashMap<>();
+    private final TransactionService transactionService = new TransactionService();
 
     @RequestMapping(value = "/transaction/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
@@ -27,16 +26,7 @@ public class TransactionServiceController {
             @PathVariable("id") Long id,
             @RequestBody Transaction transaction) {
         System.out.println("Adding transaction with id: " + id);
-
-        transactions.put(id, transaction);
-
-        final String type = transaction.getType();
-        List<Long> ids = typeToIds.get(type);
-        if (ids == null) {
-            ids = new ArrayList<>();
-            typeToIds.put(type, ids);
-        }
-        ids.add(id);
+        transactionService.addTransaction(id, transaction);
     }
 
     @RequestMapping(value = "/transaction/{id}", method = RequestMethod.GET)
@@ -44,26 +34,20 @@ public class TransactionServiceController {
     public Transaction getTransaction(
             @PathVariable("id") Long id) {
         System.out.println("Returning transaction with id: " + id);
-        return transactions.get(id);
+        return transactionService.getTransaction(id);
     }
 
     @RequestMapping(value = "/types/{type}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Long> getIdsByType(@PathVariable("type") String type) {
+    public Set<Long> getIdsByType(@PathVariable("type") String type) {
         System.out.println("Returning list of transaction ids for type: " + type);
-        return typeToIds.get(type);
+        return transactionService.getIdsByType(type);
     }
 
     @RequestMapping(value = "/sum/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Double getSumAmountByParentIds(@PathVariable("id") Long id) {
         System.out.println("Returning sum amount transitively for id: " + id);
-        double sum = 0.0;
-        Transaction transaction;
-        while (null != id && null != (transaction = transactions.get(id))) {
-            sum += transaction.getAmount();
-            id = transaction.getParentId();
-        }
-        return sum;
+        return transactionService.getSumAmountByParentIds(id);
     }
 }
